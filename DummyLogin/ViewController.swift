@@ -70,13 +70,63 @@ class ViewController: UIViewController,UITextFieldDelegate {
         return textField
     }()
     
+    private let textFieldPassword: UITextField = {
+        let textField = UITextField()
+        textField.translatesAutoresizingMaskIntoConstraints = false
+        textField.textColor = .black
+        textField.placeholder = "Password"
+        textField.borderStyle = .none
+        textField.font = .systemFont(ofSize: 20)
+        textField.autocorrectionType = .no
+        textField.isSecureTextEntry = true
+        return textField
+    }()
+    
     private lazy var tfUsernameBorder: CALayer = {
         // Adding bottom border to the textviewusername
         let bottomBorder = CALayer()
         bottomBorder.frame = CGRect(x: 0.0, y: textFieldUsername.frame.height+3, width: textFieldUsername.frame.width, height: 1.6)
         bottomBorder.backgroundColor = UIColor.darkGray.cgColor
-        textFieldUsername.layer.addSublayer(bottomBorder)
         return bottomBorder
+    }()
+    
+    private lazy var tfPasswordBorder: CALayer = {
+        let bottomBorder = CALayer()
+        bottomBorder.frame = CGRect(x: 0.0, y: textFieldPassword.frame.height+3, width: textFieldPassword.frame.width, height: 1.6)
+        bottomBorder.backgroundColor = UIColor.darkGray.cgColor
+        return bottomBorder
+    }()
+    
+    private let buttonSignIn: UIButton = {
+        let button = UIButton(type: .system)
+        button.backgroundColor = UIColor.init(red: 54.0/255.0, green: 110.0/255.0, blue: 83.0/255.0, alpha: 1.0)
+        button.setTitle("SIGN IN", for: .normal)
+        button.setTitleColor(.white, for: .normal)
+        button.titleLabel?.font = .boldSystemFont(ofSize: 18)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.layer.cornerRadius = 5
+        button.layer.shadowOpacity = 1
+        button.layer.shadowOffset = .zero
+        button.layer.shadowRadius = 2
+        return button
+    }()
+    
+    private let signUPTextView: UITextView = {
+        let textView = UITextView()
+        let signUPText = NSMutableAttributedString(string: "Don't Have an Account?", attributes: [
+            NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 17),NSAttributedString.Key.foregroundColor: UIColor.black
+        ])
+        signUPText.append(NSAttributedString.init(string: " Sign Up", attributes: [
+            NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 17),
+            NSAttributedString.Key.foregroundColor: UIColor.init(red: 54.0/255.0, green: 110.0/255.0, blue: 83.0/255.0, alpha: 1.0)
+        ]))
+        textView.attributedText = signUPText
+        textView.isScrollEnabled = false
+        textView.isEditable = false
+        textView.backgroundColor = .clear
+        textView.translatesAutoresizingMaskIntoConstraints = false
+        textView.textAlignment = .center
+        return textView
     }()
     
     override func viewDidLoad() {
@@ -85,12 +135,14 @@ class ViewController: UIViewController,UITextFieldDelegate {
         view.backgroundColor = .white
         #warning("the below step is  crucial if you want to dismiss yor textfield keyboard")
         textFieldUsername.delegate = self
+        textFieldPassword.delegate = self
         setupLayout()
     }
     
     #warning("method to close the keyboard on the textfield :) wtf")
     internal func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textFieldUsername.resignFirstResponder()
+        textFieldPassword.resignFirstResponder()
         return true
     }
     
@@ -112,6 +164,7 @@ class ViewController: UIViewController,UITextFieldDelegate {
     private func setupAdditionalLayout() {
         #warning("use this function inside viewDidAppear to add layer that will be determined after the view has built")
         textFieldUsername.layer.addSublayer(tfUsernameBorder)
+        textFieldPassword.layer.addSublayer(tfPasswordBorder)
     }
     
     private func setupLayout() {
@@ -166,13 +219,14 @@ class ViewController: UIViewController,UITextFieldDelegate {
         let bottomContainer = UIStackView()
         bottomContainer.axis = .vertical
         bottomContainer.translatesAutoresizingMaskIntoConstraints = false
+        bottomContainer.autoresizesSubviews = false
+        bottomContainer.spacing = 46
         view.addSubview(bottomContainer)
         // Setup-ing the bottom container
         NSLayoutConstraint.activate([
             // Sizing the bottom Container
             bottomContainer.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
             bottomContainer.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-            bottomContainer.heightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.heightAnchor,multiplier: 0.4),
             // Positioning the bottom container
             bottomContainer.topAnchor.constraint(equalTo: topContainer.bottomAnchor)
         ])
@@ -181,8 +235,10 @@ class ViewController: UIViewController,UITextFieldDelegate {
         horView1.translatesAutoresizingMaskIntoConstraints = false
         horView1.axis = .horizontal
         horView1.autoresizesSubviews = false
+        horView1.alignment = .center
+        horView1.spacing = 20
         // Adding the horView into bottom container
-        bottomContainer.addSubview(horView1)
+        bottomContainer.addArrangedSubview(horView1)
         // Setup-ing the horView
         #warning("uistackview will distribute element to fill if we make the width or height match parent")
         NSLayoutConstraint.activate([
@@ -192,18 +248,55 @@ class ViewController: UIViewController,UITextFieldDelegate {
             // Positioning the horview
             horView1.topAnchor.constraint(equalTo: bottomContainer.topAnchor, constant: 50)
         ])
-        // Adding the lockimage and textview in the horizontal stackview
+        // Adding the userimage and textview in the horizontal stackview
         horView1.addArrangedSubview(userImage)
         horView1.addArrangedSubview(textFieldUsername)
-        horView1.alignment = .center
-        horView1.spacing = 20
-        // Setting the lockimage and textview
+        // Setting the userimage and textview
         NSLayoutConstraint.activate([
             // Sizing the textview
             textFieldUsername.trailingAnchor.constraint(equalTo: bottomContainer.trailingAnchor, constant: -30),
-            // Sizing the lockimage
+            // Sizing the userimage
             userImage.heightAnchor.constraint(equalToConstant: 25),
             userImage.widthAnchor.constraint(equalToConstant: 25)
+        ])
+        // Creating a  horizontal UIStackView for edit text and icon password
+        let horView2 = UIStackView()
+        horView2.translatesAutoresizingMaskIntoConstraints = false
+        horView2.axis = .horizontal
+        horView2.autoresizesSubviews = false
+        horView2.spacing = 20
+        // adding the horView 2 into the bottom container
+        bottomContainer.addArrangedSubview(horView2)
+        // Setup-ing the horView2
+        NSLayoutConstraint.activate([
+            // Setting the margin to match the horView1
+            horView2.leadingAnchor.constraint(equalTo: bottomContainer.leadingAnchor, constant: 20)
+        ])
+        horView2.addArrangedSubview(lockImage)
+        horView2.addArrangedSubview(textFieldPassword)
+        // Setting the lockImage and the edit text
+        NSLayoutConstraint.activate([
+            // Sizing the lockimage
+            lockImage.heightAnchor.constraint(equalToConstant: 25),
+            lockImage.widthAnchor.constraint(equalToConstant: 25),
+            // Sizing the passwordtextfield
+            textFieldPassword.trailingAnchor.constraint(equalTo: bottomContainer.trailingAnchor, constant: -30)
+        ])
+        // Adding the sign in button
+        bottomContainer.addArrangedSubview(buttonSignIn)
+        // Setup-ing the sign in button
+        NSLayoutConstraint.activate([
+            // Sizing the button
+            buttonSignIn.leadingAnchor.constraint(equalTo: bottomContainer.leadingAnchor, constant: 20),
+            buttonSignIn.trailingAnchor.constraint(equalTo: bottomContainer.trailingAnchor, constant: -30),
+            buttonSignIn.heightAnchor.constraint(equalToConstant: 50)
+        ])
+        // Adding the textview to the bottom container
+        bottomContainer.addArrangedSubview(signUPTextView)
+        // Setup-ing the textview
+        NSLayoutConstraint.activate([
+            signUPTextView.leadingAnchor.constraint(equalTo: bottomContainer.leadingAnchor, constant: 20),
+            signUPTextView.trailingAnchor.constraint(equalTo: bottomContainer.trailingAnchor, constant: -30)
         ])
     }
 }
