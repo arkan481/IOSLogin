@@ -65,7 +65,7 @@ class ViewController: UIViewController,UITextFieldDelegate {
         textField.textColor = .black
         textField.placeholder = "Username"
         textField.borderStyle = .none
-        textField.font = .systemFont(ofSize: 20)
+        textField.font = .systemFont(ofSize: 15)
         textField.autocorrectionType = .no
         return textField
     }()
@@ -76,7 +76,7 @@ class ViewController: UIViewController,UITextFieldDelegate {
         textField.textColor = .black
         textField.placeholder = "Password"
         textField.borderStyle = .none
-        textField.font = .systemFont(ofSize: 20)
+        textField.font = .systemFont(ofSize: 15)
         textField.autocorrectionType = .no
         textField.isSecureTextEntry = true
         return textField
@@ -220,7 +220,7 @@ class ViewController: UIViewController,UITextFieldDelegate {
         bottomContainer.axis = .vertical
         bottomContainer.translatesAutoresizingMaskIntoConstraints = false
         bottomContainer.autoresizesSubviews = false
-        bottomContainer.spacing = 46
+        bottomContainer.spacing = 28
         view.addSubview(bottomContainer)
         // Setup-ing the bottom container
         NSLayoutConstraint.activate([
@@ -291,6 +291,8 @@ class ViewController: UIViewController,UITextFieldDelegate {
             buttonSignIn.trailingAnchor.constraint(equalTo: bottomContainer.trailingAnchor, constant: -30),
             buttonSignIn.heightAnchor.constraint(equalToConstant: 50)
         ])
+        // Adjusting custom spacing after the button for the textview
+        bottomContainer.setCustomSpacing(20, after: buttonSignIn)
         // Adding the textview to the bottom container
         bottomContainer.addArrangedSubview(signUPTextView)
         // Setup-ing the textview
