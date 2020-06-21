@@ -10,6 +10,11 @@ import UIKit
 
 class ViewController: UIViewController,UITextFieldDelegate {
     
+    let users = [
+        User(userName: "ada", password: "adaaja"),
+        User(userName: "io", password: "ioaja")
+    ]
+    
     private let topRightImage: UIImageView = {
         let imageView = UIImageView()
         let image = UIImage(named: "loginbg")
@@ -108,6 +113,7 @@ class ViewController: UIViewController,UITextFieldDelegate {
         button.layer.shadowOpacity = 1
         button.layer.shadowOffset = .zero
         button.layer.shadowRadius = 2
+        button.addTarget(self, action: #selector(loginClicked), for: .touchUpInside)
         return button
     }()
     
@@ -144,17 +150,6 @@ class ViewController: UIViewController,UITextFieldDelegate {
         textFieldUsername.resignFirstResponder()
         textFieldPassword.resignFirstResponder()
         return true
-    }
-    
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        // Overriding the status bar stylization
-        return .lightContent
-    }
-    
-    
-    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
-        // Method to handle the phone rotation
-        return .portrait
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -301,5 +296,24 @@ class ViewController: UIViewController,UITextFieldDelegate {
             signUPTextView.trailingAnchor.constraint(equalTo: bottomContainer.trailingAnchor, constant: -30)
         ])
     }
+    
+    private func loginCheck() -> Bool {
+        for user in users {
+            if user.userName == textFieldUsername.text && user.password == textFieldPassword.text {
+                return true
+            }
+        }
+        return false
+    }
+    
+    @objc func loginClicked() {
+        var valid = loginCheck()
+        if valid {
+            showToast(message: "Login Success", font: .systemFont(ofSize: 15))
+        }else {
+            showToast(message: "Login Failed", font: .systemFont(ofSize: 15))
+        }
+    }
+    
 }
 

@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7915D7ED249F379700D43E5F /* ViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7915D7EC249F379700D43E5F /* ViewControllerExtension.swift */; };
+		7915D7F1249F3D2500D43E5F /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7915D7F0249F3D2500D43E5F /* UserModel.swift */; };
 		798465612499EB7F005B945B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 798465602499EB7E005B945B /* AppDelegate.swift */; };
 		798465632499EB7F005B945B /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 798465622499EB7F005B945B /* SceneDelegate.swift */; };
 		798465652499EB7F005B945B /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 798465642499EB7F005B945B /* ViewController.swift */; };
@@ -35,6 +37,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		7915D7EC249F379700D43E5F /* ViewControllerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerExtension.swift; sourceTree = "<group>"; };
+		7915D7F0249F3D2500D43E5F /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
 		7984655D2499EB7E005B945B /* DummyLogin.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DummyLogin.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		798465602499EB7E005B945B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		798465622499EB7F005B945B /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -106,6 +110,8 @@
 				798465692499EB80005B945B /* Assets.xcassets */,
 				7984656B2499EB80005B945B /* LaunchScreen.storyboard */,
 				7984656E2499EB80005B945B /* Info.plist */,
+				7915D7EC249F379700D43E5F /* ViewControllerExtension.swift */,
+				7915D7F0249F3D2500D43E5F /* UserModel.swift */,
 			);
 			path = DummyLogin;
 			sourceTree = "<group>";
@@ -259,8 +265,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7915D7ED249F379700D43E5F /* ViewControllerExtension.swift in Sources */,
 				798465652499EB7F005B945B /* ViewController.swift in Sources */,
 				798465612499EB7F005B945B /* AppDelegate.swift in Sources */,
+				7915D7F1249F3D2500D43E5F /* UserModel.swift in Sources */,
 				798465632499EB7F005B945B /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
