@@ -312,10 +312,9 @@ class ViewController: UIViewController,UITextFieldDelegate,UITextViewDelegate {
     
     @objc func goToSignUP() {
         print("called gogo")
-        self.presentingViewController?.navigationController?.pushViewController(SignUpViewController(), animated: true)
+        self.navigationController?.pushViewController(SignUpViewController(), animated: true)
     }
     
-    launchoption
     
     @objc func loginClicked() {
         print("clicked")
