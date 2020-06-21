@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: UIViewController,UITextFieldDelegate {
+class ViewController: UIViewController,UITextFieldDelegate,UITextViewDelegate {
     
     let users = [
         User(userName: "ada", password: "adaaja"),
@@ -117,7 +117,7 @@ class ViewController: UIViewController,UITextFieldDelegate {
         return button
     }()
     
-    private let signUPTextView: UITextView = {
+    private lazy var signUPTextView: UITextView = {
         let textView = UITextView()
         let signUPText = NSMutableAttributedString(string: "Don't Have an Account?", attributes: [
             NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 17),NSAttributedString.Key.foregroundColor: UIColor.black
@@ -132,6 +132,10 @@ class ViewController: UIViewController,UITextFieldDelegate {
         textView.backgroundColor = .clear
         textView.translatesAutoresizingMaskIntoConstraints = false
         textView.textAlignment = .center
+        textView.isUserInteractionEnabled = true
+        let tapGesture = UITapGestureRecognizer.init(target: self, action: #selector(goToSignUP))
+        tapGesture.numberOfTapsRequired = 1
+        textView.addGestureRecognizer(tapGesture)
         return textView
     }()
     
@@ -306,7 +310,15 @@ class ViewController: UIViewController,UITextFieldDelegate {
         return false
     }
     
+    @objc func goToSignUP() {
+        print("called gogo")
+        self.presentingViewController?.navigationController?.pushViewController(SignUpViewController(), animated: true)
+    }
+    
+    launchoption
+    
     @objc func loginClicked() {
+        print("clicked")
         var valid = loginCheck()
         if valid {
             showToast(message: "Login Success", font: .systemFont(ofSize: 15))
